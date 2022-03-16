@@ -3,6 +3,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 
@@ -36,24 +37,27 @@ public class LabelLuder {
 		
 		button2.addSelectionListener(SelectionListener.widgetSelectedAdapter(e-> dialog.open()));
 		
+		SelectionListener checkButtonListener = checkButtons(dialog);
+		
+		
 		Button[] checks = new Button[2];
 		checks[0] = new Button(dialog, SWT.CHECK);
-		checks[0].addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> checks[0].setText("Pressed 1"))); 
+		checks[0].addSelectionListener(checkButtonListener); 
 		checks[0].setText("Choice 1");
 		checks[0].pack();
 		checks[1] = new Button(dialog, SWT.CHECK);
-		checks[1].addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> checks[1].setText("Pressed 2"))); 
+		checks[1].addSelectionListener(checkButtonListener); 
 		checks[1].setText("Choice 2");
 		checks[1].pack();
 		
 		Button[] radio = new Button[2];
 		radio[0] = new Button(dialog,SWT.RADIO);
 		radio[0].setText("Hellow");
-		radio[0].addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> radio[0].setText("Pressed 1")));
+		radio[0].addSelectionListener(checkButtonListener);
 		radio[0].pack();
 		radio[1] = new Button(dialog,SWT.RADIO);
 		radio[1].setText("Hellow");
-		radio[1].addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> radio[1].setText("Pressed 2")));
+		//radio[1].set
 		radio[1].pack();
 		
 		dialog.pack();
@@ -66,6 +70,40 @@ public class LabelLuder {
 		}
 		display.dispose();
 
+	}
+
+	private static SelectionListener checkButtons(Shell dialog) {
+		SelectionListener checkButtonListener = new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Object obj = e.getSource();
+				if (obj instanceof Button) {
+					Button btn = (Button) obj;
+					if (btn.getText().equals("checked")) {
+						btn.setText("unchecked");
+						btn.pack();
+						dialog.pack();
+					}
+					else if (btn.getText().equals("unchecked")) {
+						btn.setText("checked");
+						btn.pack();
+						dialog.pack();
+					}
+					else {
+						btn.setText("checked");
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
+		return checkButtonListener;
 	}
 
 }
