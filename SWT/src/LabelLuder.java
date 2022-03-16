@@ -13,7 +13,7 @@ public class LabelLuder {
 		
 		Display display = new Display();
 		Shell shell = new Shell();
-		
+		shell.setText("Toggle first!");
 		Shell dialog = new Shell();
 
 		
@@ -28,14 +28,31 @@ public class LabelLuder {
 		Label shadow_label = new Label(shell, SWT.CENTER);
 		shadow_label.setText("Ich bin ein Label");
 		
+		Button toggle = new Button(shell, SWT.TOGGLE);
+		toggle.setText("Ich bin ein Toggle");
 		
-		Button button1 = new Button(shell, SWT.TOGGLE);
-		button1.setText("Ich bin ein Toggle");
+		Button push = new Button(shell, SWT.PUSH);
+		push.setText("Ich bin ein Button");
 		
-		Button button2 = new Button(shell, SWT.PUSH);
-		button2.setText("Ich bin ein Button");
+		toggle.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
+			if(toggle.getSelection() == false && push.getText().equals("Well done Sir")) {
+				push.setText("Nope, try again");
+				push.pack();
+				shell.pack();
+			}
+			else {
+				push.setText("Well done Sir");
+			}
+		}));
 		
-		button2.addSelectionListener(SelectionListener.widgetSelectedAdapter(e-> dialog.open()));
+		push.addSelectionListener(SelectionListener.widgetSelectedAdapter(e-> {if(toggle.getSelection()) {
+			dialog.open();}
+			else {
+				push.setText("Please Toggle first");
+				push.pack();
+				shell.pack();
+			}
+		}));
 		
 		SelectionListener checkButtonListener = checkButtons(dialog);
 		
@@ -57,7 +74,7 @@ public class LabelLuder {
 		radio[0].pack();
 		radio[1] = new Button(dialog,SWT.RADIO);
 		radio[1].setText("Hellow");
-		//radio[1].set
+		radio[1].addSelectionListener(checkButtonListener);
 		radio[1].pack();
 		
 		dialog.pack();
@@ -80,18 +97,15 @@ public class LabelLuder {
 				Object obj = e.getSource();
 				if (obj instanceof Button) {
 					Button btn = (Button) obj;
-					if (btn.getText().equals("checked")) {
-						btn.setText("unchecked");
-						btn.pack();
-						dialog.pack();
-					}
-					else if (btn.getText().equals("unchecked")) {
-						btn.setText("checked");
+					if (btn.getSelection() == true) {
+						btn.setText("selected");
 						btn.pack();
 						dialog.pack();
 					}
 					else {
-						btn.setText("checked");
+						btn.setText("not selected");
+						btn.pack();
+						dialog.pack();
 					}
 				}
 			}
