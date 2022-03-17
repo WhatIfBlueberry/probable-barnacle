@@ -1,3 +1,5 @@
+
+package com.swtjface.Ch3;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
@@ -6,6 +8,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
+
 
 public class LabelLuder {
 
@@ -37,7 +40,6 @@ public class LabelLuder {
 		toggle.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
 			if(toggle.getSelection() == false && push.getText().equals("Well done Sir")) {
 				push.setText("Nope, try again");
-				push.pack();
 				shell.pack();
 			}
 			else {
@@ -49,7 +51,6 @@ public class LabelLuder {
 			dialog.open();}
 			else {
 				push.setText("Please Toggle first");
-				push.pack();
 				shell.pack();
 			}
 		}));
