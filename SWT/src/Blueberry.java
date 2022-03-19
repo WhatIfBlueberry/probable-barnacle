@@ -1,4 +1,6 @@
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -14,6 +16,8 @@ public class Blueberry {
 	
 	Text title;
 	Text description;
+	Combo rating;
+	Combo categories;
 
 	public static void main(String[] args) {
 		
@@ -30,6 +34,7 @@ public class Blueberry {
 		GridLayout grid = new GridLayout();
 		grid.numColumns = 3;
 		shell.setLayout(grid);
+		shell.setText("Blueberry");
 		
 		new Label(shell,SWT.SHADOW_IN).setText("Titel: ");
 		GridData titleLayout = new GridData(GridData.FILL, GridData.CENTER, true, false);
@@ -38,19 +43,19 @@ public class Blueberry {
 		title.setLayoutData(titleLayout);
 		
 		new Label(shell,SWT.SHADOW_IN).setText("Rating: ");
-		Combo rating = new Combo(shell, SWT.NONE);
+		rating = new Combo(shell, SWT.NONE);
 		GridData ratingLayout = new GridData(GridData.FILL, GridData.CENTER, false, false);
 		ratingLayout.horizontalSpan = 1;
 		rating.setLayoutData(ratingLayout);
 		rating.setItems(new String[] {"1", "2", "3", "4", "5" });
 		rating.setText("From 1-5");
 		
-		Button openDescription = new Button(shell, SWT.PUSH);
-		GridData openDescriptionLayout = new GridData(GridData.FILL, GridData.FILL, true, false);
+		Button enterButton = new Button(shell, SWT.PUSH);
+		GridData enterButtonLayout = new GridData(GridData.FILL, GridData.FILL, true, false);
 		//openDescriptionLayout.horizontalSpan = 1;
-		openDescriptionLayout.verticalSpan = 2;
-		openDescription.setLayoutData(openDescriptionLayout);
-		openDescription.setText("add Description");
+		enterButtonLayout.verticalSpan = 2;
+		enterButton.setLayoutData(enterButtonLayout);
+		enterButton.setText("Enter");
 		
 		Label chooseCategory = new Label(shell, SWT.SHADOW_IN);
 		GridData chooseCategoryLayout = new GridData(GridData.FILL, GridData.CENTER, true, false);
@@ -58,7 +63,7 @@ public class Blueberry {
 		chooseCategory.setLayoutData(chooseCategoryLayout);
 		chooseCategory.setText("Choose Category");
 		
-		Combo categories = new Combo(shell, SWT.NONE);
+		categories = new Combo(shell, SWT.NONE);
 		GridData categoriesLayout = new GridData(GridData.FILL, GridData.CENTER, true, false);
 		categoriesLayout.horizontalSpan = 1;
 		categories.setLayoutData(categoriesLayout);
@@ -66,13 +71,29 @@ public class Blueberry {
 		categories.setItems(new String[] {"Restaurants", "Filme / Serien", "Kochen", "Wunschliste", "Remind-me"});
 		
 		
-		
-		description = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		GridData descriptionLayout = new GridData(GridData.FILL, GridData.FILL, true, true);
+		description = new Text(shell, SWT.MULTI | SWT.BORDER);
+		GridData descriptionLayout = new GridData(GridData.FILL, GridData.FILL, false, true);
 		descriptionLayout.horizontalSpan = 3;
-		descriptionLayout.verticalSpan = 10;
+		descriptionLayout.heightHint = 7 * description.getLineHeight();
+		descriptionLayout.grabExcessVerticalSpace = true;
 		description.setLayoutData(descriptionLayout);
 		
+		SelectionListener enterListener = new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println(title.getText() +
+				description.getText() + 
+				rating.getText() + 
+				categories.getText());
+				
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+			
+		};
+		
+		enterButton.addSelectionListener(enterListener);
 		
 		shell.pack();
 		return shell;
