@@ -8,6 +8,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 
@@ -52,7 +54,6 @@ public class Blueberry {
 		
 		Button enterButton = new Button(shell, SWT.PUSH);
 		GridData enterButtonLayout = new GridData(GridData.FILL, GridData.FILL, true, false);
-		//openDescriptionLayout.horizontalSpan = 1;
 		enterButtonLayout.verticalSpan = 2;
 		enterButton.setLayoutData(enterButtonLayout);
 		enterButton.setText("Enter");
@@ -61,7 +62,7 @@ public class Blueberry {
 		GridData chooseCategoryLayout = new GridData(GridData.FILL, GridData.CENTER, true, false);
 		chooseCategoryLayout.horizontalSpan = 1;
 		chooseCategory.setLayoutData(chooseCategoryLayout);
-		chooseCategory.setText("Choose Category");
+		chooseCategory.setText("Choose Category: ");
 		
 		categories = new Combo(shell, SWT.NONE);
 		GridData categoriesLayout = new GridData(GridData.FILL, GridData.CENTER, true, false);
@@ -94,6 +95,17 @@ public class Blueberry {
 		};
 		
 		enterButton.addSelectionListener(enterListener);
+		
+		
+		Shell tableWindow = new Shell(display);
+		Table table = new Table(tableWindow, SWT.BORDER | SWT.MULTI);
+		table.setLinesVisible(true);
+		String[] colNames = { "Titel", "Typ", "Rating" };
+		TableItem item1 = new TableItem(table, SWT.CENTER);
+		item1.setText("Hallo ich bin ein Eintrag");
+		table.pack();
+		tableWindow.pack();
+		tableWindow.open();
 		
 		shell.pack();
 		return shell;
