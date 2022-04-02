@@ -1,3 +1,14 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -72,7 +83,7 @@ public class Blueberry {
 		categories.setItems(new String[] {"Restaurants", "Filme / Serien", "Kochen", "Wunschliste", "Remind-me"});
 		
 		
-		description = new Text(shell, SWT.MULTI | SWT.BORDER);
+		description = new Text(shell, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
 		GridData descriptionLayout = new GridData(GridData.FILL, GridData.FILL, false, true);
 		descriptionLayout.horizontalSpan = 3;
 		descriptionLayout.heightHint = 7 * description.getLineHeight();
@@ -82,11 +93,23 @@ public class Blueberry {
 		SelectionListener enterListener = new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
-				System.out.println(title.getText() +
-				description.getText() + 
-				rating.getText() + 
-				categories.getText());
+				safeInputToFile();
 				
+			}
+
+			private void safeInputToFile() {
+				try {
+					List<String> lines = Arrays.asList(title.getText() +
+							description.getText() + 
+							rating.getText() + 
+							categories.getText());
+					Path file = Paths.get("the-file-name.txt");
+					Files.write(file, lines, StandardCharsets.UTF_8);
+				    } catch (IOException e) {
+				      System.out.println("An error	 occurred.");
+				      e.printStackTrace();
+				    }
+
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) {
