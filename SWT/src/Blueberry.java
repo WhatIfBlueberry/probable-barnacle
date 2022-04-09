@@ -45,14 +45,13 @@ public class Blueberry {
 	}
 	
 	public Shell createMainWindow(final Display display) {
-		Shell tableShell = new Shell(display);
 		Shell shell = new Shell(display);
 		GridLayout grid = new GridLayout();
 		grid.numColumns = 4;
 		shell.setLayout(grid);
 		shell.setText("Blueberry");
 
-		new Label(shell,SWT.SHADOW_IN).setText("Titel: ");
+		new Label(shell,SWT.SHADOW_IN).setText("Title: ");
 		GridData titleLayout = new GridData(GridData.FILL, GridData.CENTER, true, false);
 		titleLayout.horizontalSpan = 3;
 		title = new Text(shell, SWT.SINGLE | SWT.BORDER);
@@ -94,58 +93,20 @@ public class Blueberry {
 		descriptionLayout.grabExcessVerticalSpace = true;
 		description.setLayoutData(descriptionLayout);
 
-		showTableButton.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				tableShell.open();
-				//geht so nicht aber sehr interesting das ich zugriff auf tableShell habe!
-			}
-		});
 		enterButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				safeInputToFile();
-				addInputToTable();
+				tableHelper.addInputToTable(Blueberry.this);
 				clearInput();
 			}
 
 		});
-		//enterButton.addSelectionListener(enterListener);
 
 		shell.pack();
 		return shell;
 
 	}
-	private void addInputToTable() {
-
-		Shell tableShell = new Shell();
-		tableShell.setText("Große Tabelle mit einer Menge tollen Daten");
-		Table table = new Table(tableShell, SWT.MULTI | SWT.BORDER
-				| SWT.FULL_SELECTION);
-		table.setLinesVisible(true);
-		table.setHeaderVisible(true);
-		String[] titles = { " ", "C", "!", "Description", "Resource",
-				"In Folder", "Location" };
-		for (int i = 0; i < titles.length; i++) {
-			TableColumn column = new TableColumn(table, SWT.NONE);
-			column.setText(titles[i]);
-		}
-		int count = 128;
-		for (int i = 0; i < count; i++) {
-			TableItem item = new TableItem(table, SWT.NONE);
-			item.setText(0, "x");
-			item.setText(1, "y");
-			item.setText(2, "!");
-			item.setText(3, "this stuff behaves the way I expect");
-			item.setText(4, "almost everywhere");
-			item.setText(5, "some.folder");
-			item.setText(6, "line " + i + " in nowhere");
-		}
-		for (int i = 0; i < titles.length; i++) {
-			table.getColumn(i).pack();
-		}
-		table.setSize(table.computeSize(SWT.DEFAULT, 200));
-		tableShell.pack();
-		tableShell.open();
-	}
+	
 
 	private void clearInput() {
 		title.setText("");
