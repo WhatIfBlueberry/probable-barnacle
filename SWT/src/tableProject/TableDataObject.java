@@ -1,3 +1,4 @@
+package tableProject;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 
