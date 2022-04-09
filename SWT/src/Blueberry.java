@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Text;
 
 
 public class Blueberry {
-
+	
 	Text title;
 	Text description;
 	Combo rating;
@@ -29,7 +29,6 @@ public class Blueberry {
 	tableHelper table = new tableHelper();
 
 	public static void main(String[] args) {
-
 		Display display = new Display();
 		Shell shell = new Blueberry().createMainWindow(display);
 		shell.open();
@@ -90,11 +89,16 @@ public class Blueberry {
 
 		enterButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				safeInputToFile();
-				table.addInputToTable(Blueberry.this);
+				table.addInputToTable(new TableDataObject(title, rating, categories, description));
 				clearInput();
 			}
 
+		});
+
+		showTableButton.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e) {
+				table.openTableShell();
+			}
 		});
 
 		shell.pack();
@@ -110,19 +114,6 @@ public class Blueberry {
 		rating.setText("From 1-5");
 	}
 
-	private void safeInputToFile() {
-		try {
-			List<String> lines = Arrays.asList(title.getText() +
-					description.getText() + 
-					rating.getText() + 
-					categories.getText());
-			Path file = Paths.get("the-file-name.txt");
-			Files.write(file, lines, StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			System.out.println("An error	 occurred.");
-			e.printStackTrace();
-		}
-
-	}
-
 }
+
+
