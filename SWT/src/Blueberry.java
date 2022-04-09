@@ -7,10 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -18,9 +16,6 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 
@@ -31,7 +26,7 @@ public class Blueberry {
 	Text description;
 	Combo rating;
 	Combo categories;
-	Table table;
+	tableHelper table = new tableHelper();
 
 	public static void main(String[] args) {
 
@@ -43,7 +38,7 @@ public class Blueberry {
 				display.sleep();
 		}
 	}
-	
+
 	public Shell createMainWindow(final Display display) {
 		Shell shell = new Shell(display);
 		GridLayout grid = new GridLayout();
@@ -96,7 +91,7 @@ public class Blueberry {
 		enterButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				safeInputToFile();
-				tableHelper.addInputToTable(Blueberry.this);
+				table.addInputToTable(Blueberry.this);
 				clearInput();
 			}
 
@@ -106,7 +101,7 @@ public class Blueberry {
 		return shell;
 
 	}
-	
+
 
 	private void clearInput() {
 		title.setText("");
