@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -21,7 +22,7 @@ import org.eclipse.swt.widgets.Text;
 
 
 public class Blueberry {
-	
+
 	Text title;
 	Text description;
 	Combo rating;
@@ -89,7 +90,13 @@ public class Blueberry {
 
 		enterButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				table.addInputToTable(new TableDataObject(title, rating, categories, description));
+				if (title.getText().isEmpty()) {
+					title.setBackground(display.getSystemColor(SWT.COLOR_RED));
+				}
+				else {
+					title.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
+					table.addInputToTable(new TableDataObject(title, rating, categories, description));
+				}
 				clearInput();
 			}
 
