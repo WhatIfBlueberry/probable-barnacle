@@ -1,16 +1,8 @@
 package tableProject;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -96,7 +88,7 @@ public class Blueberry {
 				}
 				else {
 					title.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
-					table.addInputToTable(new TableDataObject(title, rating, categories, description));
+					table.addInputToTable(new InputTableDataObject(title, rating, categories, description));
 				}
 				clearInput();
 			}

@@ -13,44 +13,49 @@ public class tableHelper {
 
 	Table table;
 	Shell tableShell;
-	List<TableDataObject> inputData = new ArrayList<>();
+	List<InputTableDataObject> inputData = new ArrayList<>();
 
-	protected void addInputToTable(TableDataObject input) {
+	protected void addInputToTable(InputTableDataObject input) {
 		inputData.add(input);
 	}
 
 	protected void openTableShell() {
 		createTableAndShell();
 		populateTable();
-		table.setSize(table.computeSize(SWT.DEFAULT, 300));
+		table.setSize(800, 500);
 		tableShell.pack();
 		tableShell.open();
 	}
 
 	private void createTableAndShell() {
 		tableShell = new Shell();
-		tableShell.setText("Große Tabelle mit einer Menge tollen Daten");
+		tableShell.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		tableShell.setText("Big Table duh");
 		table = new Table(tableShell, SWT.MULTI | SWT.BORDER
 				| SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 	}
 
+	//very static way of setting Column Width - update in the Future if possible!
 	private void populateTable() {
 		String[] titles = {"Title", "Rating", "Category", "Description"};
+		Integer[] titleWidth = {180, 80, 100, 430};
 
 		for (int i = 0; i < titles.length; i++) {
-			TableColumn column = new TableColumn(table, SWT.NONE);
+			TableColumn column = new TableColumn(table, SWT.FILL);
 			column.setText(titles[i]);
-			column.pack();
+			column.setWidth(titleWidth[i]);
 		}
 
-		for (TableDataObject input : inputData) {
-			TableItem item = new TableItem(table, SWT.NONE);
+		for (InputTableDataObject input : inputData) {
+			TableItem item = new TableItem(table, SWT.FILL);
 			item.setText(0, input.title);
 			item.setText(1, input.rating);
 			item.setText(2, input.categories);
 			item.setText(3, input.description);
 		}
 	}
+	
+
 }
